@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import auth from '../../firebase/firebase.init'
 
 const Register = props => {
+    const [user , setUser] = useState(null)
+
     const handleRegister = e => {
         e.preventDefault()
-        console.log('start this page')
-        console.log(e.target.email.value)
+        const email = e.target.email.value
+        const password = e.target.password.value
+        console.log(email , password)
+
+        // Create user with email and password
+
+        createUserWithEmailAndPassword(auth , email , password)
+        .then((result) => {
+            setUser(result.user)
+            console.log(result.user)
+        })
+        .catch(error => console.log(error))
     }
     return (
         <div className='max-w-lg mx-auto p-4'>
@@ -45,7 +59,7 @@ const Register = props => {
                             d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
                             clipRule="evenodd" />
                     </svg>
-                    <input type="password" className="grow" value="password" />
+                    <input type="password" className="grow" placeholder='Password' name='password' />
                 </label>
                 <div className="form-control mt-6">
                     <button className="btn btn-primary">Login</button>

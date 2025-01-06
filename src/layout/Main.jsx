@@ -5,7 +5,7 @@ import Header from '../components/Header/Header'
 
 const Main = props => {
     return (
-        <div>
+        <div className='max-w-5xl mx-auto'>
             <Header></Header>
             <Outlet></Outlet>
         </div>

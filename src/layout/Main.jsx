@@ -8,7 +8,7 @@ const Main = props => {
         <div className='max-w-5xl mx-auto'>
             <Header></Header>
             <Outlet></Outlet>
-        </div>
+            <h3>When things dont  g</h3>
     )
 }
 

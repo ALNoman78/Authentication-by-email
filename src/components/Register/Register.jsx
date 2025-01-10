@@ -5,12 +5,16 @@ import auth from '../../firebase/firebase.init'
 
 const Register = () => {
     const [user, setUser] = useState(null)
+    const [error , setError] = useState('')
 
     const handleRegister = e => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
         console.log(email, password)
+
+        // reset error and status
+        setError('')
 
         // Create user with email and password
 
@@ -19,7 +23,9 @@ const Register = () => {
                 setUser(result.user)
                 console.log(result.user)
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                setError(error.message)
+            })
     }
     return (
         <div className='max-w-lg mx-auto p-4'>
@@ -64,6 +70,9 @@ const Register = () => {
                 <div className="form-control mt-6">
                     <button className="btn btn-primary">Login</button>
                 </div>
+                {
+                    error && <p className='text-center font-medium text-red-500 my-5'>{error}</p>
+                }
             </form>
         </div>
     )

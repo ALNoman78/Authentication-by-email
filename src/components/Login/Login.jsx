@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Login = props => {
+const Login = () => {
     return (
         <div>
-            Login
+            <h3>Login</h3>
         </div>
-       
     )
 }
 

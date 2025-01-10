@@ -3,23 +3,23 @@ import PropTypes from 'prop-types'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import auth from '../../firebase/firebase.init'
 
-const Register = props => {
-    const [user , setUser] = useState(null)
+const Register = () => {
+    const [user, setUser] = useState(null)
 
     const handleRegister = e => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
-        console.log(email , password)
+        console.log(email, password)
 
         // Create user with email and password
 
-        createUserWithEmailAndPassword(auth , email , password)
-        .then((result) => {
-            setUser(result.user)
-            console.log(result.user)
-        })
-        .catch(error => console.log(error))
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((result) => {
+                setUser(result.user)
+                console.log(result.user)
+            })
+            .catch(error => console.log(error))
     }
     return (
         <div className='max-w-lg mx-auto p-4'>

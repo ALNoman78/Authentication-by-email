@@ -1,23 +1,50 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import auth from '../../firebase/firebase.init'
 
 const SignUp = () => {
     const [user, setUser] = useState(null)
+    const [success , setSuccess] = useState(false)
     const [error, setError] = useState('')
 
     const handleSignUp = e => {
         e.preventDefault()
         const email = e.target.email.value;
         const password = e.target.password.value;
+        console.log(password)
+
+        // password validation
+
+        if(password.length < 6){
+            setError('Password should be 6 character or longer');
+            return;
+        }
+
+        // password special character validation
+
+        const passwordRegex = /^(?=.*[a-z]) (?=.*[A-Z]) (?=.*\d) (?=.*[@$!%*?&]) [A-Za-z\d@$!%*?&]{6,}$/;
+
+        if(!passwordRegex.test(password)){
+            setError('At least one upperCase , one lowercase , one number , one special character')
+            return;
+        }
+
+        //empty error
+        setError('')
+        setSuccess(false)
+
         // sing in with authentication 
-        signInWithEmailAndPassword(auth, email, password)
+        createUserWithEmailAndPassword(auth , email , password)
             .then((result) => {
                 setUser(result.user)
+                // success message
+                setSuccess(true)
+                console.log(result.user)
             })
             .catch(error => {
                 setError(error.message)
+                setSuccess(false)
             })
         console.log('clicked Sign Up')
     }
@@ -46,11 +73,16 @@ const SignUp = () => {
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Sign up</button>
                         </div>
-                        <p className='text-center font-medium text-lg'>
                             {
-                                error
+                                error && <p className='text-center font-medium text-red-600'>
+                                    {
+                                        error
+                                    }
+                                </p>
                             }
-                        </p>
+                            {
+                                success && <p className='text-green-600 text-center font-medium'>Sign Up is Success</p>
+                            }
                     </form>
                 </div>
             </div>

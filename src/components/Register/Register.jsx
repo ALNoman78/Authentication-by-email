@@ -5,6 +5,7 @@ import auth from '../../firebase/firebase.init'
 
 const Register = () => {
     const [user, setUser] = useState(null)
+    const [success , setSuccess] = useState(false)
     const [error , setError] = useState('')
 
     const handleRegister = e => {
@@ -13,8 +14,16 @@ const Register = () => {
         const password = e.target.password.value
         console.log(email, password)
 
+        // password validation
+
+        if(password.length < 6){
+            setError('Password should be 6 character');
+            return;
+        }
+
         // reset error and status
         setError('')
+        setSuccess(false)
 
         // Create user with email and password
 
@@ -22,9 +31,11 @@ const Register = () => {
             .then((result) => {
                 setUser(result.user)
                 console.log(result.user)
+                setSuccess(true)
             })
             .catch(error => {
                 setError(error.message)
+                setSuccess(false)
             })
     }
     return (
@@ -72,6 +83,9 @@ const Register = () => {
                 </div>
                 {
                     error && <p className='text-center font-medium text-red-500 my-5' m-3>{error}</p>
+                }
+                {
+                    success && <p className='font-medium text-green-600'> Successfully Submitted</p>
                 }
             </form>
         </div>

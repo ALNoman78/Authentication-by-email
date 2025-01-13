@@ -85,7 +85,7 @@ const Register = () => {
                     error && <p className='text-center font-medium text-red-500 my-5' m-3>{error}</p>
                 }
                 {
-                    success && <p className='font-medium text-green-600'> Successfully Submitted</p>
+                    success && <p className='font-medium text-green-600 text-center'> Successfully Submitted</p>
                 }
             </form>
         </div>

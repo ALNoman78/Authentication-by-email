@@ -15,7 +15,7 @@ const SignUp = () => {
         e.preventDefault()
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(password)
+        // console.log(password)
 
         // password validation
 
@@ -26,7 +26,7 @@ const SignUp = () => {
 
         // password special character validation
 
-        const passwordRegex = /^(?=.*[a-z]) (?=.*[A-Z]) (?=.*\d) (?=.*[@$!%*?&]) [A-Za-z\d@$!%*?&]{6,}$/;
+        const passwordRegex = /^(?=.*  [a-z]) (?=.*[A-Z]) (?=.*\d) (?=.*[@$!%*?&]) [A-Za-z\d@$!%*?&]{6,}$/;
 
         if (!passwordRegex.test(password)) {
             setError('At least one upperCase , one lowercase , one number , one special character')

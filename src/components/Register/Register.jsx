@@ -77,6 +77,7 @@ const Register = () => {
                             clipRule="evenodd" />
                     </svg>
                     <input type="password" className="grow" placeholder='Password' name='password' />
+                    <button className='btn btn-xs'>e</button>
                 </label>
                 <div className="form-control mt-6">
                     <button className="btn btn-primary">Login</button>

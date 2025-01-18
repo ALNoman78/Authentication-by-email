@@ -35,7 +35,7 @@ const SignUp = () => {
 
         //empty error
         setError('')
-        setSuccess(false)
+        setSuccess(false )
 
         // sing in with authentication 
         createUserWithEmailAndPassword(auth, email, password)

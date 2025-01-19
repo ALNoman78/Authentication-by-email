@@ -19,7 +19,7 @@ const Register = () => {
         const terms = e.target.terms.checked
         console.log(email, password)
 
-        // checked
+        // checked mark sign
         if(!terms){
             setError('Please accept our terms and condition')
             return;

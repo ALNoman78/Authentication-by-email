@@ -15,7 +15,7 @@ const Register = () => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
-        // terms
+        // terms and policy section
         const terms = e.target.terms.checked
         console.log(email, password)
 

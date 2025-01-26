@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import auth from '../../firebase/firebase.init'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const [user, setUser] = useState(null)
@@ -20,7 +21,7 @@ const Register = () => {
         console.log(email, password)
 
         // checked mark sign
-        if(!terms){
+        if (!terms) {
             setError('Please accept our terms and condition')
             return;
         }
@@ -101,20 +102,44 @@ const Register = () => {
                 </label>
                 <div className="form-control">
                     <label className="label justify-start gap-4 items-center cursor-pointer">
-                        <input type="checkbox" name='terms'  className="checkbox" />
+                        <input type="checkbox" name='terms' className="checkbox" />
                         <span className="label-text">Accept our terms and condition </span>
                     </label>
                 </div>
                 <div className="form-control mt-6">
-                    <button className="btn btn-primary">Login</button>
+                    <button className="btn btn-primary" onClick={() => document.getElementById('my_modal_5').showModal()}>Login</button>
                 </div>
-                {
+                {/* {
                     error && <p className='text-center font-medium text-red-500 my-5' m-3>{error}</p>
-                }
-                {
+                } */}
+                {/* {
                     success && <p className='font-medium text-green-600 text-center'> Successfully Submitted</p>
-                }
+                } */}
+                <p className='py-3 m-4 font-medium'>Already have an account ? Please <Link className='underline text-green-500 mx-2' to='/login'>Log in</Link></p>
             </form>
+
+            {/* modal section  start*/}
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+            {/* <button className="btn" onClick={() => document.getElementById('my_modal_5').showModal()}>open modal</button> */}
+            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box flex flex-col justify-center items-center">
+                    {/* <h3 className="font-bold text-lg">Hello!</h3> */}
+                    {
+                        success && <p className='font-medium text-green-600 text-center'> Successfully Submitted</p>
+                    }
+                    {
+                        error && <p className='text-center font-medium text-red-500 my-5' m-3>{error}</p>
+                    }
+                    <div className="modal-action">
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn ">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+            {/* modal section end */}
+
         </div>
     )
 }

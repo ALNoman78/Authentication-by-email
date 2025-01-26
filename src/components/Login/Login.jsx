@@ -5,15 +5,15 @@ import auth from '../../firebase/firebase.init'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
-    const [user , setUser] = useState(null)
-    const [error , setError] = useState('')
-    const [ success , setSuccess] = useState(false)
+    const [user, setUser] = useState(null)
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState(false)
 
-    const handleLogIn = e=> {
+    const handleLogIn = e => {
         e.preventDefault()
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email , password)
+        console.log(email, password)
 
         // error and success message
 
@@ -22,16 +22,16 @@ const Login = () => {
 
         // login user
 
-        signInWithEmailAndPassword(auth , email , password)
-        .then((result) => {
-            console.log(result.user)
-            setSuccess(true)
-        })
-        .catch(error => {
-            console.log(error.message)
-            setError(error.message)
-        })
-        
+        signInWithEmailAndPassword(auth, email, password)
+            .then((result) => {
+                console.log(result.user)
+                setSuccess(true)
+            })
+            .catch(error => {
+                console.log(error.message)
+                setError(error.message)
+            })
+
     }
     return (
         <div className="hero bg-base-200 min-h-screen">
@@ -61,15 +61,30 @@ const Login = () => {
                             </label>
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary">Login</button>
+                            <button className="btn btn-primary" onClick={() => document.getElementById('my_modal_5').showModal()}> Login</button>
                         </div>
                         <div>
-                        {
-                            error && <p className='text-2xl font-bold text-red-500'>{error}</p>
-                        }
-                        {
-                            success && <p className='text-2xl font-bold text-emerald-500'>Log in Successfully</p>
-                        }
+                            {/* modal section  start*/}
+                            {/* Open the modal using document.getElementById('ID').showModal() method */}
+                            {/* <button className="btn" onClick={() => document.getElementById('my_modal_5').showModal()}>open modal</button> */}
+                            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                                <div className="modal-box flex flex-col justify-center items-center">
+                                    {/* <h3 className="font-bold text-lg">Hello!</h3> */}
+                                    {
+                                        success && <p className='font-medium text-green-600 text-center'> Successfully Submitted</p>
+                                    }
+                                    {
+                                        error && <p className='text-center font-medium text-red-500 my-5' m-3>{error}</p>
+                                    }
+                                    <div className="modal-action">
+                                        <form method="dialog">
+                                            {/* if there is a button in form, it will close the modal */}
+                                            <button className="btn ">Close</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </dialog>
+                            {/* modal section end */}
                         </div>
                         <p className='text-xl font-medium py-4 '>New to this website <Link className='text-green-600 underline' to={'/register'}> Sign Up ?</Link></p>
                     </form>

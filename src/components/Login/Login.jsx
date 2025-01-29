@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth'
 import auth from '../../firebase/firebase.init'
 import { Link } from 'react-router-dom'
 import { FaEye } from "react-icons/fa";
@@ -10,7 +10,8 @@ const Login = () => {
     // const [user, setUser] = useState(null)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState(false)
-    const [isVisible , setIsVisible] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+    const emailRef = useRef()
 
     const handleLogIn = e => {
         e.preventDefault()
@@ -28,13 +29,32 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 console.log(result.user)
-                setSuccess(true)
+                // forcefully login
+                if(!result.user.emailVerified){
+                    setError('Please verify your email address')
+                }
+                else{
+                    setSuccess(true)
+                }
             })
             .catch(error => {
                 console.log(error.message)
                 setError(error.message)
             })
+    }
 
+    const handleForgetPassword = () => {
+        console.log('get email address' , emailRef.current.value)
+        const email = emailRef.current.value
+
+        if(!email){
+            console.log('Use verified email address')
+        }else{
+            sendPasswordResetEmail(auth , email)
+            .then(result => {
+                alert('Password reset email sent , please check your email ')
+            })
+        }
     }
     return (
         <div className="hero bg-base-200 min-h-screen">
@@ -52,19 +72,21 @@ const Login = () => {
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" name='email' placeholder="email" className="input input-bordered" required />
+                            <input ref={emailRef} type="email" name='email' placeholder="email" className="input input-bordered" required />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type={isVisible ? 'text' : 'password'} name='password' placeholder="password" className="input input-bordered" required />
-                            <button className='btn btn-xs' onClick={() => setIsVisible(!isVisible)}>
-                                {
-                                    isVisible ? <FaEyeSlash> </FaEyeSlash> : <FaEye></FaEye>
-                                }
-                            </button>
-                            <label className="label">
+                            <div className='flex items-center w-full'>
+                                <input type={isVisible ? 'text' : 'password'} name='password' placeholder="password" className="input input-bordered w-full" required />
+                                <button className='btn btn-xs absolute right-10' onClick={() => setIsVisible(!isVisible)}>
+                                    {
+                                        isVisible ? <FaEyeSlash> </FaEyeSlash> : <FaEye></FaEye>
+                                    }
+                                </button>
+                            </div>
+                            <label onClick={handleForgetPassword} className="label">
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>
                         </div>

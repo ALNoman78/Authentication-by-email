@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import auth from '../../firebase/firebase.init'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
@@ -44,6 +44,10 @@ const Register = () => {
                 setUser(result.user)
                 console.log(result.user)
                 setSuccess(true)
+
+                // send verification email address
+                sendEmailVerification(auth.currentUser)
+                .then(res => console.log('verification email send'))
             })
             .catch(error => {
                 setError(error.message)
@@ -90,7 +94,7 @@ const Register = () => {
                     </svg>
                     <div>
                         <input
-                            type={isVisible ? 'text' : 'password'} className="grow"
+                            type={isVisible ? 'text' : 'password'} className="grow w-[90%]"
                             placeholder='Password'
                             name='password' required />
                         <button

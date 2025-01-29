@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import auth from '../../firebase/firebase.init'
 import { Link } from 'react-router-dom'
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
-    const [user, setUser] = useState(null)
+    // const [user, setUser] = useState(null)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState(false)
+    const [isVisible , setIsVisible] = useState(false)
 
     const handleLogIn = e => {
         e.preventDefault()
@@ -55,7 +58,12 @@ const Login = () => {
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" name='password' placeholder="password" className="input input-bordered" required />
+                            <input type={isVisible ? 'text' : 'password'} name='password' placeholder="password" className="input input-bordered" required />
+                            <button className='btn btn-xs' onClick={() => setIsVisible(!isVisible)}>
+                                {
+                                    isVisible ? <FaEyeSlash> </FaEyeSlash> : <FaEye></FaEye>
+                                }
+                            </button>
                             <label className="label">
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>

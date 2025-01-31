@@ -7,7 +7,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
-    // const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
@@ -29,6 +29,7 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 console.log(result.user)
+                setUser(result.user)
                 // forcefully login
                 if(!result.user.emailVerified){
                     setError('Please verify your email address')
@@ -60,7 +61,14 @@ const Login = () => {
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold">Login now!</h1>
+                    <img src="" alt="" />
+                    {
+                        user && <img className='w-12 h-12 rounded-full ' src={user.photoURL}></img>
+                    }
+                    <h1 className="text-5xl font-bold">{
+                        user && <h3>{user.displayName
+}</h3>
+                }</h1>
                     <p className="py-6">
                         Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
                         quasi. In deleniti eaque aut repudiandae et a id nisi.

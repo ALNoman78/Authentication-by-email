@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth'
 import auth from '../../firebase/firebase.init'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
@@ -14,12 +14,13 @@ const Register = () => {
 
     const handleRegister = e => {
         e.preventDefault()
-        const email = e.target.email.value
-        const password = e.target.password.value
-        const username = e.target.username.value
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const username = e.target.username.value;
+        const image = e.target.image.value;
         // terms and policy section
         const terms = e.target.terms.checked
-        console.log(email, password , username)
+        console.log(email, password , username , image)
 
         // checked mark sign
         if (!terms) {
@@ -49,7 +50,19 @@ const Register = () => {
                 // send verification email address
                 sendEmailVerification(auth.currentUser)
                     .then(res => console.log('verification email send'))
-            })
+            });
+
+            // update profile information
+
+            const profile = {
+                displayName : username,
+                photoURL : image
+            }
+
+            updateProfile(auth.currentUser , profile)
+            .then(res => console.log('updated profiled'))
+            .catch(error => console.log('user profile update error'))
+            
             .catch(error => {
                 setError(error.message)
                 setSuccess(false)
@@ -68,6 +81,17 @@ const Register = () => {
                             d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                     </svg>
                     <input type="text" className="grow" name='username' placeholder="Username" />
+                </label>
+                <label className="input input-bordered flex items-center gap-2 mt-4">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                        className="h-4 w-4 opacity-70">
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                    </svg>
+                    <input type="text" className="grow" name='image' placeholder="Share your image link" />
                 </label>
                 <label className="input input-bordered flex items-center gap-2 my-5">
                     <svg
